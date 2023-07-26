@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import Button from "./Button";
 import Input from "./Input";
 import ArrowLeftIcon from "../assets/icons/ArrowLeftIcon";
@@ -10,6 +10,7 @@ import { LOGIN_URL, REGISTER_URL } from "../utils/apiEndpoint";
 import { authLoginSchema, authRegistSchema } from "../validation/authSchema";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
+import { AuthContext } from "../provider/authProvider";
 
 const MySwal = withReactContent(Swal);
 const Toast = MySwal.mixin({
@@ -40,6 +41,7 @@ const fetcherLogin = (url: string, { arg }: { arg: iFormLogin }) =>
   axios.post(url, arg).then((res) => res.data);
 
 export default function Form() {
+  const { setAuth } = useContext<any>(AuthContext);
   const [loginForm, setLoginForm] = useState(true);
 
   const handleLoginForm = () => {
@@ -94,6 +96,7 @@ export default function Form() {
       });
 
       localStorage.setItem("token", responseLogin?.auth_token);
+      setAuth(responseLogin?.auth_token);
     }
   }, [responseLogin, responseErrorLogin]);
 
@@ -112,6 +115,7 @@ export default function Form() {
         title: "Register successfully",
       });
       localStorage.setItem("token", responseRegist?.auth_token);
+      setAuth(responseRegist?.auth_token);
     }
   }, [responseRegist, responseErrorRegist]);
 
