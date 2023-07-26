@@ -1,4 +1,3 @@
-"use client";
 import { useEffect, useState } from "react";
 import Button from "./Button";
 import Input from "./Input";
@@ -93,11 +92,9 @@ export default function Form() {
         icon: "success",
         title: "Login successfully",
       });
-      console.log(responseLogin);
 
       localStorage.setItem("token", responseLogin?.auth_token);
     }
-    console.log("isLoadingLogin", isLoadingLogin);
   }, [responseLogin, responseErrorLogin]);
 
   useEffect(() => {
@@ -116,7 +113,6 @@ export default function Form() {
       });
       localStorage.setItem("token", responseRegist?.auth_token);
     }
-    console.log("isLoadingLogin", isLoadingLogin);
   }, [responseRegist, responseErrorRegist]);
 
   return (

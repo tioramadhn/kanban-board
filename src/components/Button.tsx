@@ -5,6 +5,7 @@ interface iButton {
   style?: "primary" | "secondary" | "danger" | "success";
   icon?: React.JSX.Element;
   disabled?: boolean;
+  handleClick?: any;
 }
 export default function Button({
   children,
@@ -13,6 +14,7 @@ export default function Button({
   size = "sm",
   icon,
   disabled = false,
+  handleClick,
 }: iButton) {
   const variants = {
     contained: {
@@ -30,6 +32,7 @@ export default function Button({
   };
   return (
     <button
+      onClick={handleClick}
       disabled={disabled}
       className={`px-4 py-1 rounded-lg ${
         variants[variant][style]
