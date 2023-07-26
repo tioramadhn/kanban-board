@@ -8,22 +8,9 @@ import axios from "axios";
 import useSWRMutation from "swr/mutation";
 import { LOGIN_URL, REGISTER_URL } from "../utils/apiEndpoint";
 import { authLoginSchema, authRegistSchema } from "../validation/authSchema";
-import Swal from "sweetalert2";
-import withReactContent from "sweetalert2-react-content";
 import { AuthContext } from "../provider/authProvider";
+import { Toast } from "../lib/Toast";
 
-const MySwal = withReactContent(Swal);
-const Toast = MySwal.mixin({
-  toast: true,
-  position: "top-end",
-  showConfirmButton: false,
-  timer: 3000,
-  timerProgressBar: true,
-  didOpen: (toast) => {
-    toast.addEventListener("mouseenter", Swal.stopTimer);
-    toast.addEventListener("mouseleave", Swal.resumeTimer);
-  },
-});
 interface iFormRegist {
   name: string;
   email: string;

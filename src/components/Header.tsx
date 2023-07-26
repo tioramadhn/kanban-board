@@ -1,4 +1,5 @@
 import PlusIcon from "../assets/icons/PlusIcon";
+import { Toast } from "../lib/Toast";
 import { AuthContext } from "../provider/authProvider";
 import Button from "./Button";
 import { useContext } from "react";
@@ -8,6 +9,10 @@ export default function Header() {
   const handleClick = () => {
     localStorage.clear();
     setAuth(null);
+    Toast.fire({
+      icon: "success",
+      title: "Logout successfuly",
+    });
   };
   return (
     <nav className="min-h-16 border-b px-5 py-[18px] flex justify-between">
