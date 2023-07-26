@@ -9,7 +9,21 @@ import axios from "axios";
 import useSWRMutation from "swr/mutation";
 import { LOGIN_URL, REGISTER_URL } from "../utils/apiEndpoint";
 import { authLoginSchema, authRegistSchema } from "../validation/authSchema";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
 
+const MySwal = withReactContent(Swal);
+const Toast = MySwal.mixin({
+  toast: true,
+  position: "top-end",
+  showConfirmButton: false,
+  timer: 3000,
+  timerProgressBar: true,
+  didOpen: (toast) => {
+    toast.addEventListener("mouseenter", Swal.stopTimer);
+    toast.addEventListener("mouseleave", Swal.resumeTimer);
+  },
+});
 interface iFormRegist {
   name: string;
   email: string;
@@ -66,29 +80,44 @@ export default function Form() {
   };
 
   useEffect(() => {
-    if (responseRegist) {
-      console.log(responseRegist);
-    }
-    if (responseErrorRegist) {
-      console.log(responseErrorRegist);
-    }
-    console.log("isLoadingRegist", isLoadingRegist);
-
     if (responseErrorLogin) {
-      console.log(responseRegist);
+      console.log(responseErrorLogin);
+      Toast.fire({
+        icon: "error",
+        title: "Email atau password anda salah",
+      });
     }
-    if (responseLogin) {
-      console.log(responseErrorRegist);
+
+    if (responseLogin && !responseErrorLogin) {
+      Toast.fire({
+        icon: "success",
+        title: "Login successfully",
+      });
+      console.log(responseLogin);
+
+      localStorage.setItem("token", responseLogin?.auth_token);
     }
     console.log("isLoadingLogin", isLoadingLogin);
-  }, [
-    responseRegist,
-    responseErrorRegist,
-    isLoadingRegist,
-    responseLogin,
-    responseErrorLogin,
-    isLoadingLogin,
-  ]);
+  }, [responseLogin, responseErrorLogin]);
+
+  useEffect(() => {
+    if (responseErrorRegist) {
+      console.log(responseErrorRegist);
+      Toast.fire({
+        icon: "error",
+        title: "Terjadi kesalahan",
+      });
+    }
+
+    if (responseRegist && !responseErrorRegist) {
+      Toast.fire({
+        icon: "success",
+        title: "Register successfully",
+      });
+      localStorage.setItem("token", responseRegist?.auth_token);
+    }
+    console.log("isLoadingLogin", isLoadingLogin);
+  }, [responseRegist, responseErrorRegist]);
 
   return (
     <div className="divide-y border rounded-lg  p-5">
@@ -177,9 +206,7 @@ export default function Form() {
             </Button>
           </form>
           <div className="s-regular pt-2 flex gap-1 items-center">
-            <div className="w-3">
-              <ArrowLeftIcon />
-            </div>
+            <ArrowLeftIcon />
             Back to{" "}
             <span
               onClick={handleLoginForm}

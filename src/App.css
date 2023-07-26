@@ -5,3 +5,20 @@
 body {
   font-family: "Nunito Sans Variable", sans-serif;
 }
+
+/* Typography */
+.xl-bold {
+  @apply font-bold text-lg leading-7;
+}
+
+.m-regular {
+  @apply font-[400] text-sm leading-6;
+}
+
+.s-bold {
+  @apply font-bold text-lg leading-7;
+}
+
+.s-regular {
+  @apply font-[400] text-xs leading-5;
+}
