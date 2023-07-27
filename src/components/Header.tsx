@@ -1,4 +1,4 @@
-import PlusIcon from "../assets/icons/PlusIcon";
+import { PlusIcon } from "../assets/icons";
 import { Toast } from "../lib/Toast";
 import { AuthContext } from "../provider/authProvider";
 import Button from "./Button";

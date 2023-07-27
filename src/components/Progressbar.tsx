@@ -1,5 +1,4 @@
-import CheckListIcon from "../assets/icons/CheckListIcon";
-
+import { CheckListIcon } from "../assets/icons";
 export default function Progressbar({ rate = 10 }: { rate?: number }) {
   const isCompleted: boolean = rate == 100;
   return (

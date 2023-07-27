@@ -1,4 +1,4 @@
-import SettingsIcon from "../assets/icons/SettingsIcon";
+import { SettingsIcon } from "../assets/icons";
 import Progressbar from "./Progressbar";
 
 export default function TaskItem() {

@@ -1,7 +1,7 @@
 import { useEffect, useState, useContext } from "react";
 import Button from "./Button";
 import Input from "./Input";
-import ArrowLeftIcon from "../assets/icons/ArrowLeftIcon";
+import { ArrowLeftIcon } from "../assets/icons";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import axios from "axios";
