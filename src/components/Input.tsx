@@ -5,6 +5,7 @@ interface iInput {
   name: string;
   register: any;
   error?: string;
+  width?: string;
 }
 
 interface iStyles {
@@ -17,6 +18,7 @@ export default function Input({
   name,
   register,
   error,
+  width,
 }: iInput) {
   const styles: iStyles = {
     primary: "caret-primary-main focus:ring-primary-main",
@@ -39,11 +41,20 @@ export default function Input({
       </label>
     );
   }
+
+  const propsNumber = () => {
+    if (type == "number") {
+      return { min: 0, max: 100 };
+    }
+  };
   return (
     <label className="s-regular text-neutral-90 flex flex-col gap-2">
       {label}
       <input
+        style={{ width: width }}
         type={type}
+        // {...{type === 'number' && { ...({min: 0, max: 100})}}}
+        {...propsNumber()}
         placeholder={placeholder}
         className={`${
           styles[error ? "danger" : "primary"]

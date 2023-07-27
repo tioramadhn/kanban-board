@@ -48,7 +48,6 @@ export default function Header() {
   };
 
   const onSubmitAddGroup: SubmitHandler<iAddGroup> = (data) => {
-    console.log(data);
     axios
       .post(TODO_URL, data, {
         headers: {
