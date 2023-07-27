@@ -7,10 +7,10 @@ export default function SettingsProvider({
 }: {
   children: React.ReactNode;
 }) {
-  const [open, setOpen] = useState(false);
+  const [close, setClose] = useState(false);
 
   return (
-    <SettingsContext.Provider value={{ open, setOpen }}>
+    <SettingsContext.Provider value={{ close, setClose }}>
       {children}
     </SettingsContext.Provider>
   );

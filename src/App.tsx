@@ -7,18 +7,18 @@ import { SettingsContext } from "./provider/settingsProvider";
 
 function App() {
   const { auth } = useContext<any>(AuthContext);
-  const { open, setOpen } = useContext<any>(SettingsContext);
+  // const { close, setClose } = useContext<any>(SettingsContext);
 
-  const handleClick = (e: any) => {
-    if (e.target.closest(".box-menu")) return;
-    if (open) {
-      setOpen(false);
-    }
-  };
+  // const handleClick = (e: any) => {
+  //   if (e.target.closest(".box-menu")) return;
+  //   // if (!close) {
+  //   //   setClose(true);
+  //   // }
+  // };
   return (
     <>
       {auth ? (
-        <div className="min-h-screen" onClick={handleClick}>
+        <div className="min-h-screen">
           <Header />
           <Board />
         </div>

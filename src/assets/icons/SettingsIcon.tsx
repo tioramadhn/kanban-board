@@ -1,13 +1,19 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import ListMenu from "../../components/ListMenu";
 import { SettingsContext } from "../../provider/settingsProvider";
 
-export default function SettingsIcon() {
-  const { open, setOpen } = useContext<any>(SettingsContext);
+export default function SettingsIcon({ open, handleOpen }: any) {
+  const { close } = useContext<any>(SettingsContext);
+  useEffect(() => {
+    console.log("hai");
+  }, [open]);
+
   return (
     <div className="setting-box relative">
       <svg
-        onClick={() => setOpen(!open)}
+        onClick={() => {
+          handleOpen(!open);
+        }}
         xmlns="http://www.w3.org/2000/svg"
         className="w-6 h-6 hover:bg-neutral-30 rounded cursor-pointer ml-[26px]"
         viewBox="0 0 24 24"
@@ -35,7 +41,7 @@ export default function SettingsIcon() {
           strokeLinejoin="round"
         />
       </svg>
-      {open && <ListMenu />}
+      {open && !close && <ListMenu />}
     </div>
   );
 }
