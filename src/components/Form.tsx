@@ -47,6 +47,7 @@ export default function Form() {
     handleSubmit: handleSubmitRegist,
     formState: { errors: errorsRegist },
   } = useForm<iFormRegist>({ resolver: yupResolver(authRegistSchema) });
+  
   const onSubmitRegist: SubmitHandler<iFormRegist> = (data) => {
     triggerRegist(data);
   };
@@ -63,6 +64,7 @@ export default function Form() {
     handleSubmit: handleSubmitLogin,
     formState: { errors: errorsLogin },
   } = useForm<iFormLogin>({ resolver: yupResolver(authLoginSchema) });
+
   const onSubmitLogin: SubmitHandler<iFormLogin> = (data) => {
     triggerLogin(data);
   };

@@ -3,22 +3,28 @@ import GroupTask, { iGroupTask } from "./GroupTask";
 import { AuthContext } from "../provider/authProvider";
 import axios from "axios";
 import { TODO_URL } from "../utils/apiEndpoint";
+import useSWR from "swr";
 
 export default function Board() {
   const { auth } = useContext<any>(AuthContext);
   const [groupTask, setGroupTask] = useState<iGroupTask[]>([]);
 
+  const fetcher = (url: string) =>
+    axios
+      .get(url, {
+        headers: {
+          Authorization: `Bearer ${auth}`,
+        },
+      })
+      .then((res) => res.data);
+
+  const { data } = useSWR(TODO_URL, fetcher, { refreshInterval: 1000 });
+
   useEffect(() => {
-    if (auth) {
-      axios
-        .get(TODO_URL, {
-          headers: {
-            Authorization: `Bearer ${auth}`,
-          },
-        })
-        .then((res) => setGroupTask(res.data));
+    if (auth && data) {
+      setGroupTask(data);
     }
-  }, [auth]);
+  }, [auth, data]);
 
   return (
     <div className="overflow-x-auto">
