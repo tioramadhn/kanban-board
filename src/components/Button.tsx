@@ -2,7 +2,7 @@ interface iButton {
   children: React.ReactNode;
   variant?: "outlined" | "contained";
   size?: "sm" | "md" | "lg";
-  style?: "primary" | "secondary" | "danger" | "success";
+  style?: "primary" | "secondary" | "danger" | "success" | "default";
   icon?: React.JSX.Element;
   disabled?: boolean;
   handleClick?: any;
@@ -30,13 +30,21 @@ export default function Button({
       success: `bg-success-surface text-success-main border border-success-border`,
     },
   };
+
+  const text = {
+    sm: "text-sm",
+    md: "text-md",
+    lg: "text-lg",
+  };
   return (
     <button
       onClick={handleClick}
       disabled={disabled}
-      className={`px-4 py-1 rounded-lg ${
-        variants[variant][style]
-      } text-${size} font-bold flex gap-1 items-center ${
+      className={`shadow-button px-4 py-1 rounded-lg ${
+        style == "default"
+          ? `bg-white text-neutral-100 border border-neutral-40`
+          : variants[variant][style]
+      } ${text[size]} font-bold flex gap-1 items-center ${
         disabled ? null : "cursor-pointer"
       } shadow-sm  focus:ring-2 ring-gray-200 justify-center`}
     >

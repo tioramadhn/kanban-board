@@ -1,15 +1,8 @@
-import { useContext, useEffect, useState } from "react";
 import ListMenu from "../../components/ListMenu";
-import { SettingsContext } from "../../provider/settingsProvider";
 
 export default function SettingsIcon({ open, handleOpen }: any) {
-  const { close } = useContext<any>(SettingsContext);
-  useEffect(() => {
-    console.log("hai");
-  }, [open]);
-
   return (
-    <div className="setting-box relative">
+    <div className="relative">
       <svg
         onClick={() => {
           handleOpen(!open);
@@ -41,7 +34,7 @@ export default function SettingsIcon({ open, handleOpen }: any) {
           strokeLinejoin="round"
         />
       </svg>
-      {open && !close && <ListMenu />}
+      {open && <ListMenu />}
     </div>
   );
 }

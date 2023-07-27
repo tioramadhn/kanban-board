@@ -24,9 +24,10 @@ export default function Board() {
     <div className="overflow-x-auto">
       <div className="p-6 flex gap-4 w-fit min-h-[80vh] items-start">
         {groupTask
-          ? groupTask.map((item, idx) => (
+          ? groupTask.map((item) => (
               <GroupTask
-                key={idx}
+                key={item.id}
+                id={item.id}
                 title={item.title}
                 description={item.description}
               />
