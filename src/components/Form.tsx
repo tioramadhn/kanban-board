@@ -107,103 +107,105 @@ export default function Form() {
   }, [responseRegist, responseErrorRegist]);
 
   return (
-    <div className="divide-y border rounded-lg  p-5">
-      {loginForm ? (
-        <>
-          <div className="xl-bold pb-2">Login</div>
-          <form
-            className="flex flex-col py-4 min-w-[320px] gap-2"
-            onSubmit={handleSubmitLogin(onSubmitLogin)}
-          >
-            <Input
-              key={"log-input-email"}
-              register={registFormLogin("email")}
-              label="Email"
-              name="email"
-              placeholder="Enter your email"
-              error={errorsLogin.email?.message}
-            />
-            <Input
-              key={"log-input-password"}
-              register={registFormLogin("password")}
-              label="Password"
-              name="password"
-              type="password"
-              placeholder="Enter your password"
-              error={errorsLogin.password?.message}
-            />
+    <div className="min-h-screen flex items-center justify-center">
+      <div className="divide-y border rounded-lg  p-5">
+        {loginForm ? (
+          <>
+            <div className="xl-bold pb-2">Login</div>
+            <form
+              className="flex flex-col py-4 min-w-[320px] gap-2"
+              onSubmit={handleSubmitLogin(onSubmitLogin)}
+            >
+              <Input
+                key={"log-input-email"}
+                register={registFormLogin("email")}
+                label="Email"
+                name="email"
+                placeholder="Enter your email"
+                error={errorsLogin.email?.message}
+              />
+              <Input
+                key={"log-input-password"}
+                register={registFormLogin("password")}
+                label="Password"
+                name="password"
+                type="password"
+                placeholder="Enter your password"
+                error={errorsLogin.password?.message}
+              />
 
-            <Button disabled={isLoadingLogin}>
-              {isLoadingLogin ? "Loading..." : "Login"}
-            </Button>
-          </form>
-          <div className="s-regular pt-2">
-            Don't have an account ?{" "}
-            <span
-              onClick={handleLoginForm}
-              className="font-bold cursor-pointer text-primary-main"
+              <Button disabled={isLoadingLogin}>
+                {isLoadingLogin ? "Loading..." : "Login"}
+              </Button>
+            </form>
+            <div className="s-regular pt-2">
+              Don't have an account ?{" "}
+              <span
+                onClick={handleLoginForm}
+                className="font-bold cursor-pointer text-primary-main"
+              >
+                Register here
+              </span>
+            </div>
+          </>
+        ) : (
+          <>
+            <div className="xl-bold pb-2">Register</div>
+            <form
+              onSubmit={handleSubmitRegist(onSubmitRegist)}
+              className="flex flex-col py-4 min-w-[320px] gap-2"
             >
-              Register here
-            </span>
-          </div>
-        </>
-      ) : (
-        <>
-          <div className="xl-bold pb-2">Register</div>
-          <form
-            onSubmit={handleSubmitRegist(onSubmitRegist)}
-            className="flex flex-col py-4 min-w-[320px] gap-2"
-          >
-            <Input
-              key={"reg-input-name"}
-              register={registFormRegist("name")}
-              label="Name"
-              name="name"
-              placeholder="Enter your name"
-              error={errorsRegist.name?.message}
-            />
-            <Input
-              key={"reg-input-email"}
-              register={registFormRegist("email")}
-              label="Email"
-              name="email"
-              placeholder="Enter your email"
-              error={errorsRegist.email?.message}
-            />
-            <Input
-              key={"reg-input-password"}
-              register={registFormRegist("password")}
-              label="Password"
-              name="password"
-              placeholder="Enter your password"
-              type="password"
-              error={errorsRegist.password?.message}
-            />
-            <Input
-              key={"reg-input-password-confirmation"}
-              register={registFormRegist("password_confirmation")}
-              label="Password confirmation"
-              name="password_confirmation"
-              placeholder="Enter your re-password"
-              type="password"
-              error={errorsRegist.password_confirmation?.message}
-            />
-            <Button disabled={isLoadingRegist}>
-              {isLoadingRegist ? "Loading..." : "Register"}
-            </Button>
-          </form>
-          <div className="s-regular pt-2 flex gap-1 items-center">
-            <ArrowLeftIcon />
-            Back to{" "}
-            <span
-              onClick={handleLoginForm}
-              className="font-bold cursor-pointer text-primary-main"
-            >
-              login
-            </span>
-          </div>
-        </>
-      )}
+              <Input
+                key={"reg-input-name"}
+                register={registFormRegist("name")}
+                label="Name"
+                name="name"
+                placeholder="Enter your name"
+                error={errorsRegist.name?.message}
+              />
+              <Input
+                key={"reg-input-email"}
+                register={registFormRegist("email")}
+                label="Email"
+                name="email"
+                placeholder="Enter your email"
+                error={errorsRegist.email?.message}
+              />
+              <Input
+                key={"reg-input-password"}
+                register={registFormRegist("password")}
+                label="Password"
+                name="password"
+                placeholder="Enter your password"
+                type="password"
+                error={errorsRegist.password?.message}
+              />
+              <Input
+                key={"reg-input-password-confirmation"}
+                register={registFormRegist("password_confirmation")}
+                label="Password confirmation"
+                name="password_confirmation"
+                placeholder="Enter your re-password"
+                type="password"
+                error={errorsRegist.password_confirmation?.message}
+              />
+              <Button disabled={isLoadingRegist}>
+                {isLoadingRegist ? "Loading..." : "Register"}
+              </Button>
+            </form>
+            <div className="s-regular pt-2 flex gap-1 items-center">
+              <ArrowLeftIcon />
+              Back to{" "}
+              <span
+                onClick={handleLoginForm}
+                className="font-bold cursor-pointer text-primary-main"
+              >
+                login
+              </span>
+            </div>
+          </>
+        )}
+      </div>
     </div>
   );
 }
