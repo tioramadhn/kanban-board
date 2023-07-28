@@ -29,7 +29,7 @@ export default function Board() {
 
   return (
     <div className="overflow-x-auto">
-      <div className="p-6 flex gap-4 w-fit  items-start">
+      <div className="p-6 flex gap-4 w-fit min-h-screen items-start">
         {groupTask
           ? groupTask.map((item) => (
               <GroupProvider key={item.id}>

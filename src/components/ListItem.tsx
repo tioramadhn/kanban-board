@@ -14,19 +14,14 @@ import { taskItemSchema } from "../validation/taskItemSchema";
 import { Toast } from "../lib/Toast";
 import CloseIcon from "../assets/icons/CloseIcon";
 import { mutate } from "swr";
+import WarningIcon from "../assets/icons/WarningIcon";
 
 export interface iMenu {
   icon: JSX.Element;
   name: string;
   action: "edit" | "delete" | "move-right" | "move-left";
 }
-export default function ListItem({
-  menu,
-  handleOpen,
-}: {
-  menu?: iMenu;
-  handleOpen: any;
-}) {
+export default function ListItem({ menu }: { menu?: iMenu; handleOpen: any }) {
   const { auth } = useContext<any>(AuthContext);
   const { groupId } = useContext<any>(GroupContext);
   const { task } = useContext<any>(TaskContext);
@@ -68,13 +63,34 @@ export default function ListItem({
     } catch (error) {
       Toast.fire({
         icon: "error",
-        title: "Edit Task Item failed",
+        title: "Edit Task failed",
       });
     } finally {
       handleModal();
     }
   };
 
+  const handleDelete = async () => {
+    try {
+      await axios.delete(`${TODO_URL}/${groupId}/items/${task.id}`, {
+        headers: {
+          Authorization: `Bearer ${auth}`,
+        },
+      });
+      mutate(`${TODO_URL}/${groupId}/items`);
+      Toast.fire({
+        icon: "success",
+        title: "Delete Task Success",
+      });
+    } catch (error) {
+      Toast.fire({
+        icon: "error",
+        title: "Delete Task failed",
+      });
+    } finally {
+      handleModal();
+    }
+  };
   return (
     <div>
       <div
@@ -137,7 +153,27 @@ export default function ListItem({
         </Modal>
       )}
       {openModal && menu?.action === "delete" && (
-        <Modal handleOpen={setOpenModal}>Delete</Modal>
+        <Modal handleOpen={setOpenModal}>
+          <div className="flex justify-between items-center mb-6">
+            <div className="flex gap-2 items-center">
+              <WarningIcon />
+              <h1 className="xl-bold">Delete Task</h1>
+            </div>
+            <span className="cursor-pointer" onClick={handleModal}>
+              <CloseIcon />
+            </span>
+          </div>
+          <p className="m-regular mb-6">
+            Are you sure want to delete this task? your action can’t be
+            reverted.
+          </p>
+          <div className="flex gap-[10px] justify-end">
+            <Button style="default" handleClick={handleModal}>
+              Cancel
+            </Button>
+            <Button handleClick={handleDelete}>Delete</Button>
+          </div>
+        </Modal>
       )}
     </div>
   );
