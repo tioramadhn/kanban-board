@@ -40,6 +40,7 @@ export default function Board() {
           ? groupTask.map((item: iGroup, idx: number) => (
               <GroupProvider key={item?.id}>
                 <GroupTask
+                  styleIdx={idx}
                   currentId={item?.id}
                   prevId={groupTask[idx - 1]?.id}
                   nextId={groupTask[idx + 1]?.id}

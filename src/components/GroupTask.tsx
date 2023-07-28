@@ -19,6 +19,7 @@ import TaskProvider from "../provider/taskProvider";
 import CloseIcon from "../assets/icons/CloseIcon";
 
 export interface iGroupTask {
+  styleIdx: number;
   currentId?: number;
   prevId?: number;
   nextId?: number;
@@ -32,6 +33,7 @@ export interface iTaskItem {
 }
 
 export default function GroupTask({
+  styleIdx,
   currentId,
   prevId,
   nextId,
@@ -89,10 +91,21 @@ export default function GroupTask({
         });
       });
   };
-
+  const style =
+    (styleIdx + 1) % 4 == 1
+      ? "border-primary-main bg-primary-surface"
+      : (styleIdx + 1) % 4 == 2
+      ? "border-secondary-main bg-secondary-surface"
+      : (styleIdx + 1) % 4 == 3
+      ? "border-danger-main bg-danger-surface"
+      : (styleIdx + 1) % 4 == 0
+      ? "border-success-main bg-success-surface"
+      : "";
   return (
-    <div className="p-4 rounded border border-primary-main bg-primary-surface flex flex-col gap-2 w-[294px]">
-      <Label>{title}</Label>
+    <div
+      className={`p-4 rounded border ${style} flex flex-col gap-2 w-[294px]`}
+    >
+      <Label styleIdx={styleIdx}>{title}</Label>
       <p className="s-bold text-neutral-90">{description}</p>
       {taskItems?.length > 0 ? (
         taskItems.map((item: any) => (

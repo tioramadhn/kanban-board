@@ -1,20 +1,22 @@
 export default function Label({
   children,
-  style = "primary",
+  styleIdx,
 }: {
   children: React.ReactNode;
-  style?: "primary" | "secondary" | "danger" | "success";
+  styleIdx: number;
 }) {
-  const styles = {
-    primary: `bg-primary-surface text-primary-main border border-primary-border`,
-    secondary: `bg-secondary-surface text-secondary-main border border-secondary-border`,
-    danger: `bg-danger-surface text-danger-main border border-danger-border`,
-    success: `bg-success-surface text-success-main border border-success-border`,
-  };
+  const style =
+    (styleIdx + 1) % 4 == 1
+      ? "border-primary-main bg-primary-surface text-primary-main"
+      : (styleIdx + 1) % 4 == 2
+      ? "border-secondary-main bg-secondary-surface text-secondary-main"
+      : (styleIdx + 1) % 4 == 3
+      ? "border-danger-main bg-danger-surface text-danger-main"
+      : (styleIdx + 1) % 4 == 0
+      ? "border-success-main bg-success-surface text-success-main"
+      : "";
   return (
-    <div
-      className={`border py-[2px] px-2 rounded w-fit ${styles[style]} s-regular`}
-    >
+    <div className={`border py-[2px] px-2 rounded w-fit ${style} s-regular`}>
       {children}
     </div>
   );
