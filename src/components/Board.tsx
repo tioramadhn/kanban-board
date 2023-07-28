@@ -1,14 +1,20 @@
 import { useContext, useEffect, useState } from "react";
-import GroupTask, { iGroupTask } from "./GroupTask";
+import GroupTask from "./GroupTask";
 import { AuthContext } from "../provider/authProvider";
 import axios from "axios";
 import { TODO_URL } from "../utils/apiEndpoint";
 import useSWR from "swr";
 import GroupProvider from "../provider/groupContext";
 
+export interface iGroup {
+  id?: number;
+  title?: string;
+  description?: string;
+}
+
 export default function Board() {
   const { auth } = useContext<any>(AuthContext);
-  const [groupTask, setGroupTask] = useState<iGroupTask[]>([]);
+  const [groupTask, setGroupTask] = useState<iGroup[]>([]);
 
   const fetcher = (url: string) =>
     axios
@@ -31,12 +37,14 @@ export default function Board() {
     <div className="overflow-x-auto">
       <div className="p-6 flex gap-4 w-fit min-h-screen items-start">
         {groupTask
-          ? groupTask.map((item) => (
-              <GroupProvider key={item.id}>
+          ? groupTask.map((item: iGroup, idx: number) => (
+              <GroupProvider key={item?.id}>
                 <GroupTask
-                  id={item.id}
-                  title={item.title}
-                  description={item.description}
+                  currentId={item?.id}
+                  prevId={groupTask[idx - 1]?.id}
+                  nextId={groupTask[idx + 1]?.id}
+                  title={item?.title}
+                  description={item?.description}
                 />
               </GroupProvider>
             ))

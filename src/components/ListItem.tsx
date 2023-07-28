@@ -39,23 +39,78 @@ export default function ListItem({ menu }: { menu?: iMenu; handleOpen: any }) {
     }
   }, [openModal]);
 
-  const handleModal = () => {
-    setOpenModal((prev) => !prev);
-  };
-
-  const onSubmitEditTaskItem: SubmitHandler<iTaskItem> = async (data) => {
-    console.log(data);
+  const handleMoveRight = async () => {
     try {
       await axios.patch(
-        `${TODO_URL}/${groupId}/items/${task.id}`,
-        { ...data, target_todo_id: groupId },
+        `${TODO_URL}/${groupId.currentId}/items/${task.id}`,
+        { target_todo_id: groupId.nextId },
         {
           headers: {
             Authorization: `Bearer ${auth}`,
           },
         }
       );
-      mutate(`${TODO_URL}/${groupId}/items`);
+      mutate(`${TODO_URL}/${groupId.currentId}/items`);
+      mutate(`${TODO_URL}/${groupId.nextId}/items`);
+      Toast.fire({
+        icon: "success",
+        title: "Move Right Task Success",
+      });
+    } catch (error) {
+      Toast.fire({
+        icon: "error",
+        title: "Move Right Task failed",
+      });
+    }
+  };
+
+  const handleMoveLeft = async () => {
+    try {
+      await axios.patch(
+        `${TODO_URL}/${groupId.currentId}/items/${task.id}`,
+        { target_todo_id: groupId.prevId },
+        {
+          headers: {
+            Authorization: `Bearer ${auth}`,
+          },
+        }
+      );
+      mutate(`${TODO_URL}/${groupId.currentId}/items`);
+      mutate(`${TODO_URL}/${groupId.prevId}/items`);
+      Toast.fire({
+        icon: "success",
+        title: "Move Right Task Success",
+      });
+    } catch (error) {
+      Toast.fire({
+        icon: "error",
+        title: "Move Right Task failed",
+      });
+    }
+  };
+
+  const handleModal = () => {
+    if (menu?.action === "move-right") {
+      handleMoveRight();
+    }
+    if (menu?.action === "move-left") {
+      handleMoveLeft();
+    }
+    setOpenModal((prev) => !prev);
+  };
+
+  const onSubmitEditTaskItem: SubmitHandler<iTaskItem> = async (data) => {
+    try {
+      await axios.patch(
+        `${TODO_URL}/${groupId.currentId}/items/${task.id}`,
+        { ...data, target_todo_id: groupId.currentId },
+        {
+          headers: {
+            Authorization: `Bearer ${auth}`,
+          },
+        }
+      );
+      mutate(`${TODO_URL}/${groupId.currentId}/items`);
       Toast.fire({
         icon: "success",
         title: "Edit Task Item Success",
@@ -72,12 +127,12 @@ export default function ListItem({ menu }: { menu?: iMenu; handleOpen: any }) {
 
   const handleDelete = async () => {
     try {
-      await axios.delete(`${TODO_URL}/${groupId}/items/${task.id}`, {
+      await axios.delete(`${TODO_URL}/${groupId.currentId}/items/${task.id}`, {
         headers: {
           Authorization: `Bearer ${auth}`,
         },
       });
-      mutate(`${TODO_URL}/${groupId}/items`);
+      mutate(`${TODO_URL}/${groupId.currentId}/items`);
       Toast.fire({
         icon: "success",
         title: "Delete Task Success",
@@ -171,7 +226,9 @@ export default function ListItem({ menu }: { menu?: iMenu; handleOpen: any }) {
             <Button style="default" handleClick={handleModal}>
               Cancel
             </Button>
-            <Button handleClick={handleDelete}>Delete</Button>
+            <Button handleClick={handleDelete} style="danger">
+              Delete
+            </Button>
           </div>
         </Modal>
       )}

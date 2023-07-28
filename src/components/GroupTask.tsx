@@ -19,7 +19,9 @@ import TaskProvider from "../provider/taskProvider";
 import CloseIcon from "../assets/icons/CloseIcon";
 
 export interface iGroupTask {
-  id?: number;
+  currentId?: number;
+  prevId?: number;
+  nextId?: number;
   title?: string;
   description?: string;
 }
@@ -30,7 +32,9 @@ export interface iTaskItem {
 }
 
 export default function GroupTask({
-  id = 0,
+  currentId,
+  prevId,
+  nextId,
   title = "Title",
   description = "This is description",
 }: iGroupTask) {
@@ -55,12 +59,12 @@ export default function GroupTask({
       })
       .then((res) => res.data);
 
-  const { data, mutate } = useSWR(`${TODO_URL}/${id}/items`, fetcher);
+  const { data, mutate } = useSWR(`${TODO_URL}/${currentId}/items`, fetcher);
 
   useEffect(() => {
     if (data) {
       setTaskItem(data);
-      setGroupId(id);
+      setGroupId({ currentId, prevId, nextId });
     }
   }, [data]);
 
@@ -70,9 +74,8 @@ export default function GroupTask({
   };
 
   const onSubmitAddTaskItem: SubmitHandler<iTaskItem> = (data) => {
-    console.log(data);
     axios
-      .post(`${TODO_URL}/${id}/items`, data, {
+      .post(`${TODO_URL}/${currentId}/items`, data, {
         headers: {
           Authorization: `Bearer ${auth}`,
         },
