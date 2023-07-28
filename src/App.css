@@ -27,7 +27,7 @@ body {
 }
 
 .s-bold {
-  @apply font-bold text-lg leading-7;
+  @apply font-bold text-xs leading-5;
 }
 
 .s-regular {

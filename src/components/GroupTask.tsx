@@ -108,21 +108,23 @@ export default function GroupTask({
     >
       <Label styleIdx={styleIdx}>{title}</Label>
       <p className="s-bold text-neutral-90">{description}</p>
-      {taskItems?.length > 0 ? (
-        taskItems.map((item: any) => (
-          <TaskProvider key={item.id}>
-            <TaskItem
-              id={item.id}
-              name={item.name}
-              percentage={item.progress_percentage}
-              handleEdit={""}
-              handleDelete={""}
-            />
-          </TaskProvider>
-        ))
-      ) : (
-        <NoTask />
-      )}
+      <div className="flex flex-col gap-3">
+        {taskItems?.length > 0 ? (
+          taskItems.map((item: any) => (
+            <TaskProvider key={item.id}>
+              <TaskItem
+                id={item.id}
+                name={item.name}
+                percentage={item.progress_percentage}
+                handleEdit={""}
+                handleDelete={""}
+              />
+            </TaskProvider>
+          ))
+        ) : (
+          <NoTask />
+        )}
+      </div>
       <div
         className="flex gap-[5px] items-center cursor-pointer"
         onClick={handleModal}
@@ -146,7 +148,7 @@ export default function GroupTask({
             <Input
               name="name"
               label={"Task Name"}
-              placeholder="Enter your task name"
+              placeholder="Type your task"
               type="text"
               key={"modal-group-task-name"}
               register={register("name")}
