@@ -19,7 +19,7 @@ export default function Board() {
       })
       .then((res) => res.data);
 
-  const { data } = useSWR(TODO_URL, fetcher, { refreshInterval: 1000 });
+  const { data } = useSWR(TODO_URL, fetcher);
 
   useEffect(() => {
     if (auth && data) {
@@ -29,7 +29,7 @@ export default function Board() {
 
   return (
     <div className="overflow-x-auto">
-      <div className="p-6 flex gap-4 w-fit min-h-[80vh] items-start">
+      <div className="p-6 flex gap-4 w-fit  items-start">
         {groupTask
           ? groupTask.map((item) => (
               <GroupProvider key={item.id}>

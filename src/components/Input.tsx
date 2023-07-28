@@ -6,6 +6,7 @@ interface iInput {
   register: any;
   error?: string;
   width?: string;
+  defaultValue?: any;
 }
 
 interface iStyles {
@@ -19,6 +20,7 @@ export default function Input({
   register,
   error,
   width,
+  defaultValue,
 }: iInput) {
   const styles: iStyles = {
     primary: "caret-primary-main focus:ring-primary-main",
@@ -29,6 +31,7 @@ export default function Input({
       <label className="s-regular text-neutral-90 flex flex-col gap-2">
         {label}
         <textarea
+          defaultValue={defaultValue}
           type={type}
           placeholder={placeholder}
           className={`${
@@ -51,6 +54,7 @@ export default function Input({
     <label className="s-regular text-neutral-90 flex flex-col gap-2">
       {label}
       <input
+        defaultValue={defaultValue}
         style={{ width: width }}
         type={type}
         {...propsNumber()}

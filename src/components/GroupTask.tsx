@@ -16,6 +16,7 @@ import { Toast } from "../lib/Toast";
 import useSWR from "swr";
 import { GroupContext } from "../provider/groupContext";
 import TaskProvider from "../provider/taskProvider";
+import CloseIcon from "../assets/icons/CloseIcon";
 
 export interface iGroupTask {
   id?: number;
@@ -23,7 +24,7 @@ export interface iGroupTask {
   description?: string;
 }
 
-interface iTaskItem {
+export interface iTaskItem {
   name: string;
   progress_percentage: number;
 }
@@ -54,9 +55,7 @@ export default function GroupTask({
       })
       .then((res) => res.data);
 
-  const { data } = useSWR(`${TODO_URL}/${id}/items`, fetcher, {
-    refreshInterval: 1000,
-  });
+  const { data, mutate } = useSWR(`${TODO_URL}/${id}/items`, fetcher);
 
   useEffect(() => {
     if (data) {
@@ -79,6 +78,7 @@ export default function GroupTask({
         },
       })
       .then(() => {
+        mutate();
         handleModal();
         Toast.fire({
           icon: "success",
@@ -115,7 +115,12 @@ export default function GroupTask({
       </div>
       {openModal && (
         <Modal handleOpen={setOpenModal}>
-          <h1 className="xl-bold mb-6">Create Task</h1>
+          <div className="flex justify-between">
+            <h1 className="xl-bold mb-6">Create Task</h1>
+            <span className="cursor-pointer" onClick={handleModal}>
+              <CloseIcon />
+            </span>
+          </div>
           <form
             className="flex flex-col gap-5"
             onSubmit={handleSubmit(onSubmitAddTaskItem)}

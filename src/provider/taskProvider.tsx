@@ -7,10 +7,10 @@ export default function TaskProvider({
 }: {
   children: React.ReactNode;
 }) {
-  const [taskId, setTaskId] = useState<number>();
+  const [task, setTask] = useState<number>();
 
   return (
-    <TaskContext.Provider value={{ taskId, setTaskId }}>
+    <TaskContext.Provider value={{ task, setTask }}>
       {children}
     </TaskContext.Provider>
   );

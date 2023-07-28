@@ -11,6 +11,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import axios from "axios";
 import { TODO_URL } from "../utils/apiEndpoint";
 import { useSWRConfig } from "swr";
+import CloseIcon from "../assets/icons/CloseIcon";
 
 interface iAddGroup {
   title: string;
@@ -34,7 +35,7 @@ export default function Header() {
     }
   }, [open]);
 
-  const handleClick = () => {
+  const handleLogout = () => {
     localStorage.clear();
     setAuth(null);
     Toast.fire({
@@ -73,13 +74,18 @@ export default function Header() {
             Add New Group
           </Button>
         </div>
-        <Button handleClick={handleClick} style="danger" variant="outlined">
+        <Button handleClick={handleLogout} style="danger" variant="outlined">
           Logout
         </Button>
       </nav>
       {open && (
         <Modal handleOpen={setOpen}>
-          <h1 className="xl-bold mb-6">Add New Group</h1>
+          <div className="flex justify-between">
+            <h1 className="xl-bold mb-6">Add New Group</h1>
+            <span className="cursor-pointer" onClick={() => setOpen(!open)}>
+              <CloseIcon />
+            </span>
+          </div>
           <form
             className="flex flex-col gap-5"
             onSubmit={handleSubmit(onSubmitAddGroup)}

@@ -6,11 +6,11 @@ import { TaskContext } from "../provider/taskProvider";
 
 export default function TaskItem({ id, name, percentage }: any) {
   const [open, setOpen] = useState(false);
-  const { setTaskId } = useContext<any>(TaskContext);
+  const { setTask } = useContext<any>(TaskContext);
 
   useEffect(() => {
     if (id) {
-      setTaskId(id);
+      setTask({ id, name, percentage });
     }
   }, [id]);
 
@@ -22,7 +22,7 @@ export default function TaskItem({ id, name, percentage }: any) {
         <Progressbar rate={percentage} />
         <div className="relative ml-[26px]">
           <SettingsIcon open={open} handleOpen={setOpen} />
-          {open && <ListMenu />}
+          {open && <ListMenu handleOpen={setOpen} />}
         </div>
       </div>
     </div>
