@@ -101,6 +101,7 @@ export default function GroupTask({
       : (styleIdx + 1) % 4 == 0
       ? "border-success-main bg-success-surface"
       : "";
+
   return (
     <div
       className={`p-4 rounded border ${style} flex flex-col gap-2 w-[294px]`}

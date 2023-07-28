@@ -67,7 +67,7 @@ export default function Header() {
 
   return (
     <div>
-      <nav className="min-h-16 border-b px-5 py-[18px] flex justify-between">
+      <nav className="min-h-16 border-b px-5 py-[18px] flex justify-between items-center">
         <div className="flex md:gap-[10px] md:flex-row flex-col md:items-center items-start">
           <span className="text-lg font-bold leading-7">Product Roadmap</span>
           <Button icon={<PlusIcon />} handleClick={() => setOpen(!open)}>
