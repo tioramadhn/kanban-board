@@ -53,7 +53,6 @@ export default function Input({
       <input
         style={{ width: width }}
         type={type}
-        // {...{type === 'number' && { ...({min: 0, max: 100})}}}
         {...propsNumber()}
         placeholder={placeholder}
         className={`${

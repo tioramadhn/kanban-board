@@ -4,6 +4,7 @@ import { AuthContext } from "../provider/authProvider";
 import axios from "axios";
 import { TODO_URL } from "../utils/apiEndpoint";
 import useSWR from "swr";
+import GroupProvider from "../provider/groupContext";
 
 export default function Board() {
   const { auth } = useContext<any>(AuthContext);
@@ -31,12 +32,13 @@ export default function Board() {
       <div className="p-6 flex gap-4 w-fit min-h-[80vh] items-start">
         {groupTask
           ? groupTask.map((item) => (
-              <GroupTask
-                key={item.id}
-                id={item.id}
-                title={item.title}
-                description={item.description}
-              />
+              <GroupProvider key={item.id}>
+                <GroupTask
+                  id={item.id}
+                  title={item.title}
+                  description={item.description}
+                />
+              </GroupProvider>
             ))
           : "Loading..."}
       </div>

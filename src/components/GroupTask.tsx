@@ -12,6 +12,10 @@ import Button from "./Button";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { taskItemSchema } from "../validation/taskItemSchema";
+import { Toast } from "../lib/Toast";
+import useSWR from "swr";
+import { GroupContext } from "../provider/groupContext";
+import TaskProvider from "../provider/taskProvider";
 
 export interface iGroupTask {
   id?: number;
@@ -30,35 +34,57 @@ export default function GroupTask({
   description = "This is description",
 }: iGroupTask) {
   const { auth } = useContext<any>(AuthContext);
+  const { setGroupId } = useContext<any>(GroupContext);
   const [taskItems, setTaskItem] = useState<any>(null);
   const [openModal, setOpenModal] = useState(false);
 
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<iTaskItem>({ resolver: yupResolver(taskItemSchema) });
 
-  const getTaskItem = (id: number) => {
+  const fetcher = (url: string) =>
     axios
-      .get(`${TODO_URL}/${id}/items`, {
+      .get(url, {
         headers: {
           Authorization: `Bearer ${auth}`,
         },
       })
-      .then((res) => setTaskItem(res.data));
-  };
+      .then((res) => res.data);
+
+  const { data } = useSWR(`${TODO_URL}/${id}/items`, fetcher, {
+    refreshInterval: 1000,
+  });
 
   useEffect(() => {
-    getTaskItem(id);
-  }, []);
+    if (data) {
+      setTaskItem(data);
+      setGroupId(id);
+    }
+  }, [data]);
 
   const handleModal = () => {
     setOpenModal((prev) => !prev);
+    reset();
   };
 
   const onSubmitAddTaskItem: SubmitHandler<iTaskItem> = (data) => {
     console.log(data);
+    axios
+      .post(`${TODO_URL}/${id}/items`, data, {
+        headers: {
+          Authorization: `Bearer ${auth}`,
+        },
+      })
+      .then(() => {
+        handleModal();
+        Toast.fire({
+          icon: "success",
+          title: "Add Task Item Success",
+        });
+      });
   };
 
   return (
@@ -67,11 +93,15 @@ export default function GroupTask({
       <p className="s-bold text-neutral-90">{description}</p>
       {taskItems?.length > 0 ? (
         taskItems.map((item: any) => (
-          <TaskItem
-            key={item.id}
-            name={item.name}
-            percentage={item.progress_percentage}
-          />
+          <TaskProvider key={item.id}>
+            <TaskItem
+              id={item.id}
+              name={item.name}
+              percentage={item.progress_percentage}
+              handleEdit={""}
+              handleDelete={""}
+            />
+          </TaskProvider>
         ))
       ) : (
         <NoTask />
@@ -85,10 +115,11 @@ export default function GroupTask({
       </div>
       {openModal && (
         <Modal handleOpen={setOpenModal}>
-          <h1 className="xl-bold mb-6">Add New Group</h1>
+          <h1 className="xl-bold mb-6">Create Task</h1>
           <form
             className="flex flex-col gap-5"
             onSubmit={handleSubmit(onSubmitAddTaskItem)}
+            noValidate
           >
             <Input
               name="name"

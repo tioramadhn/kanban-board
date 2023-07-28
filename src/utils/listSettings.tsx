@@ -4,10 +4,11 @@ import {
   DeleteIcon,
   EditIcon,
 } from "../assets/icons";
+import { iMenu } from "../components/ListItem";
 
-export const listSettings = [
-  { icon: <ArrowRightIcon />, name: "Move Right" },
-  { icon: <ArrowLeftIcon />, name: "Move Left" },
-  { icon: <EditIcon />, name: "Edit" },
-  { icon: <DeleteIcon />, name: "Delete" },
+export const listSettings: iMenu[] = [
+  { icon: <ArrowRightIcon />, name: "Move Right", action: "move-right" },
+  { icon: <ArrowLeftIcon />, name: "Move Left", action: "move-left" },
+  { icon: <EditIcon />, name: "Edit", action: "edit" },
+  { icon: <DeleteIcon />, name: "Delete", action: "delete" },
 ];
