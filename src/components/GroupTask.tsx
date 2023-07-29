@@ -110,7 +110,7 @@ export default function GroupTask({
       <p className="s-bold text-neutral-90">{description}</p>
       <div className="flex flex-col gap-3">
         {taskItems?.length > 0 ? (
-          taskItems.map((item: any) => (
+          taskItems?.map((item: any) => (
             <TaskProvider key={item.id}>
               <TaskItem
                 id={item.id}
@@ -156,7 +156,7 @@ export default function GroupTask({
             />
             <Input
               name="percentage_progress"
-              label={"Description"}
+              label={"Percentage"}
               placeholder="70%"
               width={"143px"}
               type="number"

@@ -79,12 +79,12 @@ export default function ListItem({ menu }: { menu?: iMenu; handleOpen: any }) {
       mutate(`${TODO_URL}/${groupId.prevId}/items`);
       Toast.fire({
         icon: "success",
-        title: "Move Right Task Success",
+        title: "Move Left Task Success",
       });
     } catch (error) {
       Toast.fire({
         icon: "error",
-        title: "Move Right Task failed",
+        title: "Move Left Task failed",
       });
     }
   };
@@ -188,7 +188,7 @@ export default function ListItem({ menu }: { menu?: iMenu; handleOpen: any }) {
             />
             <Input
               name="progress_percentage"
-              label={"Description"}
+              label={"Percentage"}
               defaultValue={task.percentage}
               placeholder="70%"
               width={"143px"}

@@ -24,6 +24,7 @@ interface iFormLogin {
 
 const fetcherRegist = (url: string, { arg }: { arg: iFormRegist }) =>
   axios.post(url, arg).then((res) => res.data);
+
 const fetcherLogin = (url: string, { arg }: { arg: iFormLogin }) =>
   axios.post(url, arg).then((res) => res.data);
 
@@ -47,7 +48,7 @@ export default function Form() {
     handleSubmit: handleSubmitRegist,
     formState: { errors: errorsRegist },
   } = useForm<iFormRegist>({ resolver: yupResolver(authRegistSchema) });
-  
+
   const onSubmitRegist: SubmitHandler<iFormRegist> = (data) => {
     triggerRegist(data);
   };

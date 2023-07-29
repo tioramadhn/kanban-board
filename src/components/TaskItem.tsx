@@ -3,6 +3,7 @@ import { SettingsIcon } from "../assets/icons";
 import Progressbar from "./Progressbar";
 import ListMenu from "./ListMenu";
 import { TaskContext } from "../provider/taskProvider";
+import OutsideWrapper from "../hook/useOutsideWrapper";
 
 export default function TaskItem({ id, name, percentage }: any) {
   const [open, setOpen] = useState(false);
@@ -22,7 +23,11 @@ export default function TaskItem({ id, name, percentage }: any) {
         <Progressbar rate={percentage} />
         <div className="relative ml-[26px]">
           <SettingsIcon open={open} handleOpen={setOpen} />
-          {open && <ListMenu handleOpen={setOpen} />}
+          {open && (
+            <OutsideWrapper callback={() => setOpen(false)}>
+              <ListMenu handleOpen={setOpen} />
+            </OutsideWrapper>
+          )}
         </div>
       </div>
     </div>

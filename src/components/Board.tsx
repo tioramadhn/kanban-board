@@ -5,7 +5,6 @@ import axios from "axios";
 import { TODO_URL } from "../utils/apiEndpoint";
 import useSWR from "swr";
 import GroupProvider from "../provider/groupContext";
-
 export interface iGroup {
   id?: number;
   title?: string;
@@ -23,15 +22,17 @@ export default function Board() {
           Authorization: `Bearer ${auth}`,
         },
       })
-      .then((res) => res.data);
+      .then((res) => {
+        return res.data;
+      });
 
   const { data } = useSWR(TODO_URL, fetcher);
 
   useEffect(() => {
-    if (auth && data) {
+    if (data) {
       setGroupTask(data);
     }
-  }, [auth, data]);
+  }, [data]);
 
   return (
     <div className="overflow-x-auto">
